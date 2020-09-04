@@ -10,6 +10,7 @@ import { SeriesItemsIndexesRange, TimedValue } from '../model/time-data';
 import { ScaledRenderer } from './scaled-renderer';
 import { drawArrow, hitTestArrow } from './series-markers-arrow';
 import { drawCircle, hitTestCircle } from './series-markers-circle';
+import { drawEmptyCircle, hitTestEmptyCircle } from './series-markers-empty-circle';
 import { drawSquare, hitTestSquare } from './series-markers-square';
 import { drawText, hitTestText } from './series-markers-text';
 
@@ -114,6 +115,9 @@ function drawShape(item: SeriesMarkerRendererDataItem, ctx: CanvasRenderingConte
 		case 'arrowUp':
 			drawArrow(true, ctx, item.x, item.y, item.size);
 			return;
+		case 'emptyCircle':
+			drawEmptyCircle(ctx, item.x, item.y, item.size);
+			return;
 		case 'circle':
 			drawCircle(ctx, item.x, item.y, item.size);
 			return;
@@ -145,6 +149,8 @@ function hitTestShape(item: SeriesMarkerRendererDataItem, x: Coordinate, y: Coor
 			return hitTestArrow(false, item.x, item.y, item.size, x, y);
 		case 'circle':
 			return hitTestCircle(item.x, item.y, item.size, x, y);
+		case 'emptyCircle':
+			return hitTestEmptyCircle(item.x, item.y, item.size, x, y);
 		case 'square':
 			return hitTestSquare(item.x, item.y, item.size, x, y);
 	}

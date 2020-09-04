@@ -123,7 +123,7 @@ export declare type OverlayPriceScaleOptions = Omit<PriceScaleOptions, 'visible'
 export declare type PriceFormat = PriceFormatBuiltIn | PriceFormatCustom;
 export declare type PriceFormatterFn = (priceValue: BarPrice) => string;
 export declare type SeriesMarkerPosition = 'aboveBar' | 'belowBar' | 'inBar';
-export declare type SeriesMarkerShape = 'circle' | 'square' | 'arrowUp' | 'arrowDown';
+export declare type SeriesMarkerShape = 'emptyCircle' | 'circle' | 'square' | 'arrowUp' | 'arrowDown';
 export declare type SeriesOptions<T> = T & SeriesOptionsCommon;
 export declare type SeriesPartialOptions<T> = DeepPartial<T & SeriesOptionsCommon>;
 export declare type SeriesType = keyof SeriesOptionsMap;

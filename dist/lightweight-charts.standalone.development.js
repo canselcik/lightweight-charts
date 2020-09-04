@@ -1,6 +1,6 @@
 /*!
  * @license
- * TradingView Lightweight Charts v3.2.0-dev+202009042202
+ * TradingView Lightweight Charts v3.2.0-dev+202009042213
  * Copyright (c) 2020 TradingView, Inc.
  * Licensed under Apache License 2.0 https://www.apache.org/licenses/LICENSE-2.0
  */
@@ -4727,6 +4727,7 @@
             case 'arrowDown':
             case 'arrowUp':
                 return size(originalSize, 1);
+            case 'emptyCircle':
             case 'circle':
                 return size(originalSize, 0.8);
             case 'square':
@@ -4795,6 +4796,22 @@
         ctx.fill();
     }
     function hitTestCircle(centerX, centerY, size, x, y) {
+        var circleSize = shapeSize('circle', size);
+        var tolerance = 2 + circleSize / 2;
+        var xOffset = centerX - x;
+        var yOffset = centerY - y;
+        var dist = Math.sqrt(xOffset * xOffset + yOffset * yOffset);
+        return dist <= tolerance;
+    }
+
+    function drawEmptyCircle(ctx, centerX, centerY, size) {
+        var circleSize = shapeSize('circle', size);
+        var halfSize = (circleSize - 1) / 2;
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, halfSize, 0, 2 * Math.PI, false);
+        ctx.fill();
+    }
+    function hitTestEmptyCircle(centerX, centerY, size, x, y) {
         var circleSize = shapeSize('circle', size);
         var tolerance = 2 + circleSize / 2;
         var xOffset = centerX - x;
@@ -4884,6 +4901,9 @@
             case 'arrowUp':
                 drawArrow(true, ctx, item._internal_x, item._internal_y, item._internal_size);
                 return;
+            case 'emptyCircle':
+                drawEmptyCircle(ctx, item._internal_x, item._internal_y, item._internal_size);
+                return;
             case 'circle':
                 drawCircle(ctx, item._internal_x, item._internal_y, item._internal_size);
                 return;
@@ -4910,6 +4930,8 @@
                 return hitTestArrow(false, item._internal_x, item._internal_y, item._internal_size, x, y);
             case 'circle':
                 return hitTestCircle(item._internal_x, item._internal_y, item._internal_size, x, y);
+            case 'emptyCircle':
+                return hitTestEmptyCircle(item._internal_x, item._internal_y, item._internal_size, x, y);
             case 'square':
                 return hitTestSquare(item._internal_x, item._internal_y, item._internal_size, x, y);
         }
@@ -10746,7 +10768,7 @@
 
     /// <reference types="_build-time-constants" />
     function version() {
-        return "3.2.0-dev+202009042202";
+        return "3.2.0-dev+202009042213";
     }
 
     var LightweightChartsModule = /*#__PURE__*/Object.freeze({
