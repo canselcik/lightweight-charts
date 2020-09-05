@@ -13,6 +13,7 @@ export function drawEmptyCircle(
 
 	ctx.beginPath();
 	ctx.arc(centerX, centerY, halfSize, 0, 2 * Math.PI, false);
+	ctx.closePath();
 }
 
 export function hitTestEmptyCircle(
